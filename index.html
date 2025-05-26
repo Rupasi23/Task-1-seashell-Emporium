@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SeaShell Emporium</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&amp;display=swap"
+    rel="stylesheet"
+  />
+  <!-- Font Awesome CDN for social icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    /* Reset and base styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: "Poppins", sans-serif;
+      scroll-behavior: smooth;
+      line-height: 1.6;
+      color: #3b3a39;
+      background-color: #fcefe3;
+    }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    a:focus,
+    button:focus,
+    input:focus {
+      outline: 2px solid #317580;
+      outline-offset: 2px;
+    }
+    /* Sticky header and nav */
+    header.sticky-header {
+      position: sticky;
+      top: 0;
+      background-color: #fcefe3cc;
+      backdrop-filter: saturate(180%) blur(20px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.07);
+      z-index: 9999;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    header.sticky-header.scrolled {
+      background-color: #317580;
+      box-shadow: 0 4px 10px rgba(49, 117, 128, 0.8);
+    }
+    header .logo {
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: #317580;
+      user-select: none;
+      cursor: default;
+      font-family: "Poppins", cursive;
+      letter-spacing: 1px;
+      transition: color 0.3s ease;
+    }
+    header.sticky-header.scrolled .logo {
+      color: #fcefe3;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.8rem;
+    }
+    nav ul li a {
+      font-weight: 500;
+      font-size: 1rem;
+      color: #3b3a39;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: color 0.3s ease, background-color 0.3s ease;
+      cursor: pointer;
+    }
+    header.sticky-header.scrolled nav ul li a {
+      color: #fcefe3;
+    }
+    nav ul li a:hover,
+    nav ul li a:focus {
+      color: #fcefe3;
+      background-color: #61a5a4;
+      outline: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    main > section {
+      margin-bottom: 3.5rem;
+    }
+    @media (min-width: 768px) {
+      main > section {
+        margin-bottom: 5rem;
+      }
+    }
+    @media (min-width: 1024px) {
+      main > section {
+        margin-bottom: 6rem;
+      }
+    }
+
+    section.hero {
+      min-height: 100vh;
+      background: linear-gradient(
+          rgba(49, 117, 128, 0.7),
+          rgba(97, 165, 164, 0.6)
+        ),
+        url("https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1400&q=80")
+          no-repeat center center/cover;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fcefe3;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    section.hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 0 3px 10px rgba(0, 0, 0, 0.5);
+      color: #0e4b50;
+    }
+    section.hero p {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      font-weight: 400;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+      color: #fcefe3;
+    }
+    .cta-button {
+      background-color: #317580;
+      color: white;
+      padding: 0.85rem 2.25rem;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      box-shadow: 0 5px 15px rgba(49, 117, 128, 0.5);
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      text-transform: uppercase;
+      user-select: none;
+    }
+    .cta-button:hover,
+    .cta-button:focus {
+      background-color: #61a5a4;
+      box-shadow: 0 8px 25px rgba(97, 165, 164, 0.6);
+      outline: none;
+    }
+
+    section.about {
+      background-color: #eaf4f5;
+      padding: 2.5rem 3rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 16px;
+      box-shadow: 0 6px 15px rgba(49, 117, 128, 0.15);
+      text-align: center;
+      color: #3b3a39;
+    }
+    section.about h2 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #0e4b50;
+    }
+    section.about p {
+      font-size: 1.15rem;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #3b3a39;
+    }
+
+    section.products {
+      background-color: #d2f0f1;
+      padding: 4rem 2rem 6rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      color: #3b3a39;
+      text-align: center;
+      border-radius: 12px;
+    }
+    section.products h2 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #0e4b50;
+    }
+    .product-category {
+      margin-bottom: 3rem;
+    }
+    .product-category h3 {
+      color: #317580;
+      font-weight: 700;
+      font-size: 2rem;
+      margin-bottom: 1.25rem;
+      text-align: left;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .product-item {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 18px rgba(0, 0, 0, 0.05);
+      padding: 1.5rem 1rem 2rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #3b3a39;
+    }
+    .product-item:hover,
+    .product-item:focus-within {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 30px rgba(49, 117, 128, 0.3);
+      outline: none;
+    }
+    .product-item img {
+      max-width: 140px;
+      height: 140px;
+      border-radius: 12px;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+      user-select: none;
+      flex-shrink: 0;
+    }
+    .product-item h3 {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: #317580;
+      text-align: center;
+    }
+    .product-item p {
+      font-size: 0.9rem;
+      color: #3b3a39;
+      flex-grow: 1;
+      text-align: center;
+      user-select: none;
+    }
+
+    section.contact {
+      background-color: #e1f3f4;
+      padding: 4rem 2rem 6rem;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+      color: #3b3a39;
+      border-radius: 12px;
+    }
+    section.contact h2 {
+      font-size: 2.75rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #0e4b50;
+    }
+    section.contact p {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      user-select: text;
+    }
+    .social-media {
+      margin-top: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .social-media a {
+      font-size: 2.4rem;
+      color: #317580;
+      transition: color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-media a:hover,
+    .social-media a:focus {
+      color: #61a5a4;
+      outline: none;
+    }
+    @media (max-width: 480px) {
+      .social-media {
+        gap: 1rem;
+      }
+      .social-media a {
+        font-size: 2rem;
+      }
+    }
+
+    footer {
+      background-color: #317580;
+      color: #fcefe3;
+      padding: 1.75rem 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+    footer a {
+      color: #d2f0f1;
+      margin: 0 0.5rem;
+    }
+    footer a:hover,
+    footer a:focus {
+      color: #e1f3f4;
+      text-decoration: underline;
+      outline: none;
+    }
+
+    @media (max-width: 768px) {
+      nav ul {
+        gap: 1rem;
+      }
+      section.hero {
+        padding: 6rem 1rem 5rem;
+      }
+      section.about,
+      section.products,
+      section.contact {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+      .product-category h3 {
+        font-size: 1.5rem;
+      }
+    }
+    @media (max-width: 480px) {
+      header.sticky-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav ul {
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 0.75rem;
+      }
+      .product-item img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    /* Modal styles for login & product */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(49, 117, 128, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      padding: 1rem;
+    }
+    .modal.active {
+      display: flex;
+    }
+    .modal-content {
+      background: #fcefe3;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 90%;
+      padding: 2rem;
+      box-shadow: 0 10px 40px rgba(49, 117, 128, 0.9);
+      position: relative;
+      outline: none;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.25rem;
+    }
+    .modal-header h3 {
+      font-size: 1.75rem;
+      color: #317580;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #317580;
+      transition: color 0.3s ease;
+    }
+    .modal-close:hover,
+    .modal-close:focus {
+      color: #61a5a4;
+      outline: none;
+    }
+    form.login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    form.login-form label {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #3b3a39;
+    }
+    form.login-form input {
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+      border-radius: 6px;
+      border: 1.5px solid #61a5a4;
+      transition: border-color 0.3s ease;
+      color: #3b3a39;
+      background-color: #fcefe3;
+    }
+    form.login-form input::placeholder {
+      color: #a7a29d;
+    }
+    form.login-form input:focus {
+      border-color: #317580;
+      outline: none;
+      background-color: #e1f3f4;
+    }
+    form.login-form button[type="submit"] {
+      background-color: #317580;
+      color: white;
+      border: none;
+      padding: 0.85rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 15px rgba(49, 117, 128, 0.5);
+    }
+    form.login-form button[type="submit"]:hover,
+    form.login-form button[type="submit"]:focus {
+      background-color: #61a5a4;
+      box-shadow: 0 8px 25px rgba(97, 165, 164, 0.6);
+      outline: none;
+    }
+    /* Related products grid inside modal */
+    .related-products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+    .related-product-item {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 0.75rem;
+      text-align: center;
+      user-select: none;
+      cursor: default;
+    }
+    .related-product-item img {
+      width: 100%;
+      height: 100px;
+      border-radius: 10px;
+      object-fit: cover;
+      margin-bottom: 0.5rem;
+    }
+    .related-product-item h4 {
+      font-size: 1rem;
+      color: #317580;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky-header" role="banner">
+    <div class="logo" aria-label="Your brand name logo" tabindex="0">SeaShell Emporium</div>
+    <nav role="navigation" aria-label="Primary navigation">
+      <ul>
+        <li><a href="#home" tabindex="0">Home</a></li>
+        <li><a href="#about" tabindex="0">About</a></li>
+        <li><a href="#products" tabindex="0">Products</a></li>
+        <li><a href="#contact" tabindex="0">Contact</a></li>
+        <li><a href="#!" id="loginBtn" tabindex="0" aria-haspopup="dialog" aria-controls="loginModal">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="home" class="hero" role="region" aria-label="Hero section">
+      <h1>Welcome to SeaShell Emporium</h1>
+      <p>“From the heart of the ocean to the palm of your hand — discover handcrafted seashell jewelry and natural treasures that tell a story.”
+
+</p>
+      <a href="#products" class="cta-button" role="button" tabindex="0">Shop Now</a>
+    </section>
+
+    <section id="about" class="about" role="region" aria-label="About us section">
+      <h2>About Us</h2>
+      <p>We are a passionate small business dedicated to providing the best products with exceptional service.</p>
+      <p>Our commitment is to quality, innovation, and customer satisfaction.</p>
+    </section>
+
+    <section id="products" class="products" role="region" aria-label="Products or features section">
+      <h2>Our Products</h2>
+
+      <!-- Seashell Jewelry Category -->
+      <div class="product-category">
+        <h3>Seashell Jewelry</h3>
+        <div class="product-grid">
+          <article class="product-item" tabindex="0" data-product="necklace" aria-label="Seashell Necklace">
+            <img src="https://i.ebayimg.com/images/g/RocAAOSw8NtfmV7A/s-l1200.jpg" alt="Seashell Necklace" loading="lazy" />
+            <h3>Seashell Necklace</h3>
+            <p>Beautiful necklace made from natural seashells.</p>
+          </article>
+          <article class="product-item" tabindex="0" data-product="earrings" aria-label="Seashell Earrings">
+            <img src="https://i.pinimg.com/736x/67/1c/0e/671c0e9e3294e15ce236544042702875.jpg" alt="Seashell Earrings" loading="lazy" />
+            <h3>Seashell Earrings</h3>
+            <p>Elegant earrings crafted from seashells.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Ocean Décor Category -->
+      <div class="product-category">
+        <h3>Ocean Décor</h3>
+        <div class="product-grid">
+          <article class="product-item" tabindex="0" data-product="wall-art" aria-label="Ocean Wall Art">
+            <img src="https://i.pinimg.com/736x/d3/75/eb/d375eb0c119ca9493e354046f3bd3252.jpg" alt="Ocean Wall Art" loading="lazy" />
+            <h3>Ocean Wall Art</h3>
+            <p>Stunning wall art inspired by ocean waves.</p>
+          </article>
+          <article class="product-item" tabindex="0" data-product="decorative-shells" aria-label="Decorative Shells">
+            <img src="https://i.pinimg.com/736x/a5/aa/28/a5aa2876e71f9d003653e63220c8c395.jpg" alt="Decorative Shells in Vase" loading="lazy" />
+            <h3>Decorative Shells</h3>
+            <p>Collection of shells perfect for display.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- DIY Craft Kits Category -->
+      <div class="product-category">
+        <h3>DIY Craft Kits</h3>
+        <div class="product-grid">
+          <article class="product-item" tabindex="0" data-product="craft-kit" aria-label="Seashell Craft Kit">
+            <img src="https://i.pinimg.com/736x/6d/8c/78/6d8c78849b272d8167723ce5a9bcfa2b.jpg" alt="Seashell Craft Kit" loading="lazy" />
+            <h3>Seashell Craft Kit</h3>
+            <p>Everything you need to make your own seashell art.</p>
+          </article>
+          <article class="product-item" tabindex="0" data-product="craft-supplies" aria-label="Ocean-Themed Craft Supplies">
+            <img src="https://i.pinimg.com/736x/0f/b9/8c/0fb98c7ae466533834100269400435e6.jpg" alt="Ocean-Themed Craft Supplies" loading="lazy" />
+            <h3>Ocean-Themed Craft Supplies</h3>
+            <p>Materials for your next ocean project.</p>
+          </article>
+        </div>
+      </div>
+
+      <!-- Gift Boxes Category -->
+      <div class="product-category">
+        <h3>Gift Boxes</h3>
+        <div class="product-grid">
+          <article class="product-item" tabindex="0" data-product="gift-box" aria-label="Ocean Gift Box">
+            <img src="https://i.pinimg.com/736x/0f/b9/8c/0fb98c7ae466533834100269400435e6.jpg" alt="Ocean Gift Box with assorted items" loading="lazy" />
+            <h3>Ocean Gift Box</h3>
+            <p>Curated gift boxes with ocean-inspired items.</p>
+          </article>
+          <article class="product-item" tabindex="0" data-product="crafted-gift-set" aria-label="candles">
+            <img src="https://i.pinimg.com/736x/5a/81/19/5a8119e9889d2eadb3d8baff1e23dfd2.jpg" alt="Crafted Gift Set" loading="lazy" />
+            <h3>Crafted Gift Set</h3>
+            <p>Beautifully packaged gift set for every occasion.</p>
+          </article>
+        </div>
+      </div>
+
+    </section>
+
+    <section id="contact" class="contact" role="region" aria-label="Contact us section">
+      <h2>Get in Touch</h2>
+      <p>Email: <a href="mailto:info@yourbrand.com">info@yourbrand.com</a></p>
+      <p>Phone: <a href="tel:+1234567890">(123) 456-7890</a></p>
+      <div class="social-media" role="list" aria-label="Social media links">
+        <a href="https://facebook.com/yourprofile" role="listitem" aria-label="Facebook" tabindex="0" target="_blank" rel="noopener noreferrer"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://twitter.com/yourprofile" role="listitem" aria-label="Twitter" tabindex="0" target="_blank" rel="noopener noreferrer"><i class="fab fa-twitter"></i></a>
+        <a href="https://instagram.com/yourprofile" role="listitem" aria-label="Instagram" tabindex="0" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i></a>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo">
+    <p>© 2025 YourBrandName. All rights reserved.</p>
+    <p><a href="#" tabindex="0">Terms</a> | <a href="#" tabindex="0">Privacy</a></p>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle" tabindex="-1">
+    <div class="modal-content" tabindex="0">
+      <div class="modal-header">
+        <h3 id="loginTitle">Login</h3>
+        <button class="modal-close" aria-label="Close login form" id="closeModalBtn" type="button">&times;</button>
+      </div>
+      <form class="login-form" id="loginForm" novalidate>
+        <label for="email">Email address</label>
+        <input type="email" id="email" name="email" placeholder="your.email@example.com" required autocomplete="email" />
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required autocomplete="current-password" minlength="6" />
+        <button type="submit">Log In</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Related Products Modal -->
+  <div class="modal" id="relatedProductsModal" role="dialog" aria-modal="true" aria-labelledby="relatedProductsTitle" tabindex="-1">
+    <div class="modal-content" tabindex="0">
+      <div class="modal-header">
+        <h3 id="relatedProductsTitle">Related Products</h3>
+        <button class="modal-close" aria-label="Close related products" id="closeRelatedProductsBtn" type="button">&times;</button>
+      </div>
+      <div id="relatedProductsContainer" class="related-products-grid" aria-live="polite">
+        <!-- dynamically loaded related products -->
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Scroll header color change
+    window.addEventListener("scroll", () => {
+      const header = document.querySelector(".sticky-header");
+      if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+      } else {
+        header.classList.remove("scrolled");
+      }
+    });
+
+    // Modal focus trap and control for login and related product modals
+    const loginBtn = document.getElementById("loginBtn");
+    const loginModal = document.getElementById("loginModal");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+
+    const relatedProductsModal = document.getElementById("relatedProductsModal");
+    const closeRelatedProductsBtn = document.getElementById("closeRelatedProductsBtn");
+    const relatedProductsContainer = document.getElementById("relatedProductsContainer");
+
+    function trapFocus(element) {
+      const focusableSelectors = 'a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+      const focusableElements = element.querySelectorAll(focusableSelectors);
+      const firstEl = focusableElements[0];
+      const lastEl = focusableElements[focusableElements.length - 1];
+
+      element.addEventListener("keydown", e => {
+        if (e.key === "Tab" || e.keyCode === 9) {
+          if (e.shiftKey) {
+            if (document.activeElement === firstEl) {
+              lastEl.focus();
+              e.preventDefault();
+            }
+          } else {
+            if (document.activeElement === lastEl) {
+              firstEl.focus();
+              e.preventDefault();
+            }
+          }
+        }
+      });
+    }
+
+    function openModal(modal) {
+      modal.classList.add("active");
+      modal.setAttribute("aria-hidden", "false");
+      modal.focus();
+      trapFocus(modal);
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(modal, openerBtn) {
+      modal.classList.remove("active");
+      modal.setAttribute("aria-hidden", "true");
+      openerBtn.focus();
+      document.body.style.overflow = "";
+    }
+
+    loginBtn.addEventListener("click", e => {
+      e.preventDefault();
+      openModal(loginModal);
+    });
+    closeModalBtn.addEventListener("click", () => closeModal(loginModal, loginBtn));
+    loginModal.addEventListener("click", e => {
+      if (e.target === loginModal) closeModal(loginModal, loginBtn);
+    });
+
+    closeRelatedProductsBtn.addEventListener("click", () => closeModal(relatedProductsModal, lastOpenedProduct));
+    relatedProductsModal.addEventListener("click", e => {
+      if (e.target === relatedProductsModal) closeModal(relatedProductsModal, lastOpenedProduct);
+    });
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "Escape") {
+        if (loginModal.classList.contains("active")) closeModal(loginModal, loginBtn);
+        if (relatedProductsModal.classList.contains("active")) closeModal(relatedProductsModal, lastOpenedProduct);
+      }
+    });
+
+    // Login form validation
+    const loginForm = document.getElementById("loginForm");
+    loginForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const email = loginForm.email.value.trim();
+      const password = loginForm.password.value.trim();
+
+      if (!email) {
+        alert("Please enter your email.");
+        loginForm.email.focus();
+        return;
+      }
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        loginForm.email.focus();
+        return;
+      }
+      if (!password || password.length < 6) {
+        alert("Password must be at least 6 characters.");
+        loginForm.password.focus();
+        return;
+      }
+
+      alert("Login successful! (This is a demo action)");
+      loginForm.reset();
+      closeModal(loginModal, loginBtn);
+    });
+
+    // Related products data (example grouping by product keys)
+    const relatedProductsData = {
+      necklace: [
+        { title: "Seashell pendant", img: "https://i.pinimg.com/736x/c3/17/48/c31748a16f9e13a44041edb5df5fd1c4.jpg" },
+        { title: "Seashell Bracelet", img: "https://i.pinimg.com/736x/16/71/30/1671308bfdb30cd91a393bbeae47827c.jpg" },
+        { title: "necklace", img: "https://i.pinimg.com/736x/32/45/0a/32450ad3a14169b574c26776e7b5e24c.jpg" },
+        { title: "pendant", img: "https://i.pinimg.com/736x/39/6d/89/396d89b25a3bc5d9f442ef0efe97208e.jpg" },
+        { title: "bead necklace", img: "https://i.pinimg.com/736x/92/ab/b7/92abb7044bb9e63e194c6116bb186fc8.jpg" },
+        { title: "minimals", img: "https://i.pinimg.com/736x/e7/c2/f8/e7c2f8453d6c6ee642967a5948620439.jpg" }
+      ],
+      earrings: [
+        { title: "Seashell Necklace", img: "https://i.pinimg.com/736x/12/5d/f8/125df84231367650547f2f6c2d98b849.jpg" },
+        { title: "Seashell Bracelet", img: "https://i.pinimg.com/736x/0f/62/d5/0f62d584360d65d5223f54520803d053.jpg" },
+        { title: "Seashell Ring", img: "https://i.pinimg.com/736x/52/e6/54/52e654fd32747fef05cd02e262617574.jpg" },
+        { title: "Seashell Bracelet", img: "https://i.pinimg.com/736x/22/8b/ba/228bbad3452078198ac7eb0314d3188d.jpg" },
+        { title: "earings", img: "https://i.pinimg.com/736x/33/84/9b/33849be7264c21595bfa75f78b2524f9.jpg" },
+        { title: "Seashell Earings", img: "https://i.pinimg.com/736x/c6/7f/45/c67f45d7e1de8708a3ebeb32b89ceb72.jpg" },
+      ],
+      "wall-art": [
+        { title: "Decorative Shells", img: "https://i.pinimg.com/736x/34/f5/96/34f5968b79c0deab4eaa1b54b1f7e79e.jpg" },
+        { title: "Ocean Sculptures", img: "https://i.pinimg.com/736x/02/2c/77/022c77197ac28d94652df4d2d2ba8ed9.jpg" },
+         { title: "wall art", img: "https://i.pinimg.com/736x/c1/ee/36/c1ee36ad0e46d4c70d9b4c6ddd43cc9f.jpg" },
+         { title: "frames", img: "https://i.pinimg.com/736x/62/93/1b/62931bb9db2d7ed6d20a355586896c04.jpg" },
+         { title: "ocean frames", img: "https://i.pinimg.com/736x/7f/41/19/7f4119b2fd718bda59e13a4939b27bce.jpg" },
+         { title: "shell art", img: "https://i.pinimg.com/736x/99/b0/5e/99b05ea6a432688e5171cdae5b1da4c7.jpg" }
+      ],
+      "decorative-shells": [
+        { title: "Ocean Wall Art", img: "https://i.pinimg.com/736x/9f/33/3c/9f333cb02ff25a8ecc524fdf59098b63.jpg" },
+        { title: "Ocean Sculptures", img: "https://i.pinimg.com/736x/f3/03/43/f30343628307d626b2406bd19bea87de.jpg" },
+        { title: "color shells", img: "https://i.pinimg.com/736x/fc/59/d4/fc59d42c00d0417ea344e55981d1c734.jpg" },
+        { title: "voilet", img: "https://i.pinimg.com/736x/90/19/97/90199727db8dbe9234c248de84db315b.jpg" },
+        { title: "flowery", img: "https://i.pinimg.com/736x/3f/39/75/3f3975cb3b9e59d469decd79a8ccd11c.jpg" },
+        { title: "summery", img: "https://i.pinimg.com/736x/54/81/cd/5481cd59f2ef73ce6622fd5ece4a8cfb.jpg" }
+      ],
+      "craft-kit": [
+        { title: "Ocean-Themed Craft Supplies", img: "https://i.pinimg.com/736x/81/3e/6c/813e6c310f4cabf2c05b8ac17edbb2e7.jpg" },
+        { title: "Seashell ", img: "https://i.pinimg.com/736x/a4/8a/2e/a48a2e1bfee93df28c60af09dd9adea8.jpg" },
+        { title: "vase", img: "https://i.pinimg.com/736x/0d/96/d2/0d96d27435cbba4e8967ec5adddeb7fb.jpg" },
+        { title: "bottles", img: "https://i.pinimg.com/736x/44/8c/0c/448c0ce578a0e0c872a57d1a1f74456f.jpg" },
+        { title: "shells", img: "https://i.pinimg.com/736x/66/50/13/665013e759efbf2b2cca1af134cc45d1.jpg" },
+        { title: "pot", img: "https://i.pinimg.com/736x/11/9e/09/119e099ce49e73147a59a71285ef47ef.jpg" }
+      ],
+      "craft-supplies": [
+        { title: "Seashell Craft Kit", img: "https://i.pinimg.com/736x/a5/aa/28/a5aa2876e71f9d003653e63220c8c395.jpg" },
+        { title: "art", img: "https://i.pinimg.com/736x/d3/75/eb/d375eb0c119ca9493e354046f3bd3252.jpg"},
+        { title: "clock", img: "https://i.pinimg.com/736x/44/e2/1e/44e21e1ac9f5e3d22f8b8e3400e1b673.jpg" },
+        { title: "mirror", img: "https://i.pinimg.com/736x/3d/4a/2c/3d4a2cd7d4b39a9505d5fc4ce10dafa5.jpg" },
+        { title: "mirrors", img: "https://i.pinimg.com/736x/b6/57/01/b6570164f98c1a87ace2b7195db37e50.jpg" }
+      ],
+      "gift-box": [
+        { title: "Crafted Gift Set", img: "https://i.pinimg.com/736x/0f/b9/8c/0fb98c7ae466533834100269400435e6.jpg" },
+        { title: "Ocean Wall Art", img: "https://i.pinimg.com/736x/6d/8c/78/6d8c78849b272d8167723ce5a9bcfa2b.jpg" },
+        { title: "boxes", img: "https://i.pinimg.com/736x/a2/31/11/a23111b6a8a647e91aa8398f5efd6cbe.jpg" },
+        { title: "gift box", img: "https://i.pinimg.com/736x/bc/6b/28/bc6b286cf3b909dbfeec6e36c0190950.jpg" },
+        { title: "phone cover", img: "https://i.pinimg.com/736x/67/c6/6b/67c66b65d0acdb6af9768cca995f70c1.jpg" },
+        { title: "phone case", img: "https://i.pinimg.com/736x/59/42/48/5942483f689d0c466ae9401ffd161972.jpg" }
+      ],
+      "candles": [
+        { title: "Ocean candles", img: "https://i.pinimg.com/736x/5a/81/19/5a8119e9889d2eadb3d8baff1e23dfd2.jpg" },
+        { title: "candles", img: "https://i.pinimg.com/736x/50/92/0e/50920e327988e8ed2150fa7d4f6dc4e8.jpg" },
+        { title: "key chains", img: "https://i.pinimg.com/736x/d4/24/56/d42456026369325af9e3850d642fda56.jpg" },
+        { title: "key chain", img: "https://i.pinimg.com/736x/f7/44/6d/f7446d0a737357e86714cf3aae6a81e9.jpg" },
+        { title: "wall papers", img: "https://i.pinimg.com/736x/e3/b8/73/e3b87324efb434f9298de7deb5cb0065.jpg" },
+        { title: "hair clip", img: "https://i.pinimg.com/736x/3f/71/d6/3f71d68b8e09b4165a1b04da8b99ba29.jpg" }
+      ],
+      
+    };
+
+    let lastOpenedProduct = null;
+
+    function createRelatedProductCard(product) {
+      const div = document.createElement('div');
+      div.className = 'related-product-item';
+      div.setAttribute('tabindex', '0');
+      div.innerHTML = `
+        <img src="${product.img}" alt="${product.title}" loading="lazy" />
+        <h4>${product.title}</h4>
+      `;
+      return div;
+    }
+
+    // Handle product card click
+    document.querySelectorAll('.product-item').forEach(card => {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', () => {
+        const productKey = card.getAttribute('data-product');
+        if (!productKey || !relatedProductsData[productKey]) return;
+
+        // Clear existing
+        relatedProductsContainer.innerHTML = '';
+
+        // Add related products
+        relatedProductsData[productKey].forEach(prod => {
+          const prodCard = createRelatedProductCard(prod);
+          relatedProductsContainer.appendChild(prodCard);
+        });
+
+        lastOpenedProduct = card;
+        openModal(relatedProductsModal);
+      });
+    });
+
+  </script>
+</body>
+</html>
